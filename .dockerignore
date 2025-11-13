@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environments
+.venv/
+.env
+
+# VCS
+.git/
+.gitignore
+
+# Editor/OS
+.vscode/
+.DS_Store
