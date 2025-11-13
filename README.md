@@ -22,7 +22,30 @@ docker run --rm -p 8000:8000 mini-api:latest
 ```bash
 curl http://127.0.0.1:8000/
 curl http://127.0.0.1:8000/hello
+curl http://127.0.0.1:8000/metrics  # métriques Prometheus
 ```
+
+## Monitoring & métriques (Prometheus)
+
+Un endpoint `/metrics` est exposé via `prometheus-fastapi-instrumentator`.
+
+### Lancer API + Prometheus avec docker-compose
+
+```bash
+docker compose up -d --build
+```
+
+Accès:
+- API: http://localhost:8000/
+- Metrics: http://localhost:8000/metrics
+- Prometheus UI: http://localhost:9090/
+
+Arrêt:
+```bash
+docker compose down
+```
+
+Le fichier `prometheus.yml` configure un job `mini-api` qui scrute l'endpoint `/metrics` toutes les 15s.
 
 ## Démarrage local (optionnel, sans Docker)
 ```bash
