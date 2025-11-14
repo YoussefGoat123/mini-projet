@@ -7,8 +7,7 @@ services:
     container_name: api
     ports:
       - "8000:8000"
-    # Restart policy helpful for resilience
-    restart: unless-stopped
+    
 
   prometheus:
     image: prom/prometheus:latest
@@ -19,9 +18,22 @@ services:
       - "9090:9090"
     depends_on:
       - api
-    restart: unless-stopped
+  
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+    depends_on:
+      - prometheus
+    
 
-# After starting, access:
-# API        -> http://localhost:8000/
-# Metrics    -> http://localhost:8000/metrics
-# Prometheus -> http://localhost:9090/
+
+
+volumes:
+  grafana-data:

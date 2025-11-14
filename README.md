@@ -40,19 +40,29 @@ Accès:
 - Metrics: http://localhost:8000/metrics
 - Prometheus UI: http://localhost:9090/
 
-Arrêt:
+## Visualisation (Grafana)
+
+Setup volontairement minimal (aucun dashboard pré-provisionné) pour apprendre à créer les panels soi‑même.
+
+Lancer toute la stack:
 ```bash
-docker compose down
+docker compose up -d --build
 ```
 
-Le fichier `prometheus.yml` configure un job `mini-api` qui scrute l'endpoint `/metrics` toutes les 15s.
+Accès:
+- Grafana: http://localhost:3000/  (admin / admin)
+- Prometheus: http://localhost:9090/
 
-## Démarrage local (optionnel, sans Docker)
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
-```
+### Datasource Prometheus
+Une datasource `Prometheus` devrait déjà exister (provisionnée) avec l’URL interne: `http://prometheus:9090`.
+Si elle n’apparaît pas:
+1. Connections > Data sources > Add data source
+2. Choisir Prometheus
+3. URL: `http://prometheus:9090`
+4. Access: `Server (Proxy)` puis "Save & test" (doit être vert)
 
-Ouvrir: http://127.0.0.1:8000
+### Créer un premier dashboard
+1. Dashboards > New > New dashboard > Add visualization
+2. Sélectionner datasource `Prometheus`
+3. Ajouter des panels , puis Save .
+
